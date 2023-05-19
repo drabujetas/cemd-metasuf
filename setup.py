@@ -9,8 +9,8 @@ with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='cemd_metasurf',
-    packages=find_packages(include=['cemd_metasurf']),
-    version='0.1.0',
+    packages=find_packages(include=['cemd_metasurf','cemd_metasurf.depolarization_gf','cemd_metasurf.reflec_transm','cemd_metasurf.polarizability']),
+    version='0.1.2',
     description='Optical properties of metasurfaces made of dipolar particles',
     long_description=long_description,
     long_description_content_type="text/markdown",
