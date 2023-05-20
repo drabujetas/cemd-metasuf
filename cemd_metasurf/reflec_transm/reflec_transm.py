@@ -26,12 +26,9 @@ class ReTr(object):
 		8. t_tm
 		9. t_te
 
-		:param my_bloch: The object with the information of the wavevectos. By default it is not needed,
-		using the wavevetors stored in self.array_k_gb. If a my_bloch is used, R and T would be calculated
-		over these values.
+		:param my_bloch: The object with the information of the wavevectos. By default it is not needed, using the wavevetors stored in self.array_k_gb. If a my_bloch is used, R and T would be calculated over these values.
 		:type my_bloch: classes.BlochWavevector
-		:param ind_ini: From which value of the stored gb start to calculate R and T (try to generilized to a range).
-						Only used is "my_bloch = None".
+		:param ind_ini: From which value of the stored gb start to calculate R and T (try to generilized to a range). Only used is "my_bloch = None".
 		:type ind_ini: Int 
 		:param n: Diffractive order along x-axis.
 		:type n: Int

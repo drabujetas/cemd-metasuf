@@ -3,3 +3,6 @@
 **/dist
 **/cemd_metasurf.egg-info
 **/.eggs
+**/_build
+**/_static
+**/_templates

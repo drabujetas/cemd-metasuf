@@ -10,7 +10,7 @@ class Metasurface(DGreenFunction, ReTr):
 	For example the lattice vector "hat(v_1)" and "hat(v_2)" would be:
 	"hat(v_1) = a hat(x)", 
 	"hat(v_2) = b (cos(th)*hat(x) + sin(th)*hat(y))".
-	Note that "|hat(v_1)| = a" and "|hat(v_2)| = b".
+	Note that "norm(hat(v_1)) = a" and "norm(hat(v_2)) = b".
 	"x", "y" and "z" defined the position of the particles in the unit cell.
 	"eps_b" is the backgroud permittivity and the permittivity of the layred substrate (if present).
 	"d_layer" defined the with of the layered substrate (if present).
