@@ -29,6 +29,7 @@ author = 'Diego Romero Abujetas'
 # ones.
 extensions = [
 	'recommonmark',
+	'sphinx.ext.mathjax',
 	'sphinx.ext.autodoc',
 	'sphinx.ext.viewcode',
 ]
@@ -36,6 +37,9 @@ extensions = [
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+html_theme_options = {
+    'navigation_depth': 5,
+}
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

@@ -1,14 +1,15 @@
-# Author: Diego Romero Abujetas, March 2023, diegoromeabu@gmail.com
-#
-# This file contain all the functions needed to calculate the polarizability of 
-# Mie particles
-#
-# Calculation of (dipolar) polarizability of spheres by Mie theory.
-# - sph_jn, sph_yn, sph_djn, sph_dyn,   (Spherical Bessel functions of integer order)
-# - psi, diff_psi, xi, diff_xi          (Auxiliary functions)
-# - Mie_an, Mie_bn              (Mie coefficients)
-# - get_alpha                   (dipolar polarizability)
+"""
+Author: Diego Romero Abujetas, March 2023, diegoromeabu@gmail.com
 
+This file contain all the functions needed to calculate the polarizability of 
+Mie particles
+
+Calculation of (dipolar) polarizability of spheres by Mie theory.
+- sph_jn, sph_yn, sph_djn, sph_dyn,   (Spherical Bessel functions of integer order)
+- psi, diff_psi, xi, diff_xi          (Auxiliary functions)
+- Mie_an, Mie_bn              (Mie coefficients)
+- get_alpha                   (dipolar polarizability)
+"""
 import numpy as np
 
 def sph_jn(n,x):
@@ -51,36 +52,13 @@ def sph_dyn(n,x):
 
 def psi(n, x):
     return x * sph_jn(n,x)
-    """
-    if n == 0:
-        return np.sin(x)
-    elif n == 1:
-        return np.sin(x)/x - np.cos(x)
-    elif n > 1:
-        psi_n = (2*n-1)/x*psi(n-1,x) - psi(n-2,x)
-        return psi_n
-    else:
-        return print("negative n are not implemented")
-    #return x * sps.spherical_jn(n, x, 0)
-    """
 
 def diff_psi(n, x):
     return sph_jn(n, x) + x * sph_djn(n, x)
 
 def xi(n, x):
     return x * (sph_jn(n,x) + 1j*sph_yn(n,x))
-    """
-    if n == 0:
-        return np.sin(x) - 1j*np.cos(x)
-    elif n == 1:
-        return (np.sin(x)/x - np.cos(x)) - 1j*(np.cos(x)/x + np.sin(x))
-    elif n > 1:
-        xi_n = (2*n-1)/x*xi(n-1,x) - xi(n-2,x)
-        return xi_n
-    else:
-        return print("negative n are not implemented")
-    #return x * (sps.spherical_jn(n, x, 0) + 1j * sps.spherical_yn(n, x, 0))
-    """
+
 
 def diff_xi(n, x):
     return (sph_jn(n, x) + 1j * sph_yn(n, x)) + x * (sph_djn(n, x) + 1j * sph_dyn(n, x))
