@@ -29,7 +29,7 @@ Modules
 :doc:`source/api/depolarization_gf`
     The submodule depolarization_gf encloses the classes and function for calculating the depolarization Green function of the array.
 
- :doc:`source/api/reflec_transm`
+:doc:`source/api/reflec_transm`
     In the submodule reflec_transm the classes and function for calculating reflectance and transmitance can be found.
 
 .. Hidden TOCs
