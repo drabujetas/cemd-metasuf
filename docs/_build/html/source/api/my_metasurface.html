@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>my_metasurface &mdash; cemd metasurf  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="polarizability" href="polarizability.html" />
+    <link rel="prev" title="cemd metasurf’s documentation!" href="../../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cemd metasurf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">my_metasurface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cemd_metasurf.Metasurface"><code class="docutils literal notranslate"><span class="pre">Metasurface</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.get_bloch"><code class="docutils literal notranslate"><span class="pre">Metasurface.get_bloch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.get_lattice"><code class="docutils literal notranslate"><span class="pre">Metasurface.get_lattice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.get_unit_cell"><code class="docutils literal notranslate"><span class="pre">Metasurface.get_unit_cell()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_alpha"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_alpha()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_alpha_user_defined"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_alpha_user_defined()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_bloch"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_bloch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_lattice"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_lattice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_particle_i"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_particle_i()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_particles"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_particles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.Metasurface.set_unit_cell"><code class="docutils literal notranslate"><span class="pre">Metasurface.set_unit_cell()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cemd_metasurf.BlochWavevector"><code class="docutils literal notranslate"><span class="pre">BlochWavevector</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.BlochWavevector.get_bloch"><code class="docutils literal notranslate"><span class="pre">BlochWavevector.get_bloch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.BlochWavevector.get_bloch_i"><code class="docutils literal notranslate"><span class="pre">BlochWavevector.get_bloch_i()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cemd_metasurf.ParticleMie"><code class="docutils literal notranslate"><span class="pre">ParticleMie</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="polarizability.html">polarizability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="depolarization_gf.html">depolarization_gf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reflec_transm.html">reflec_transm</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/example_rt.html">Reflectance at constant angle of incidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/example_rt.html#id1">Reflectance at constant angle of incidence</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cemd metasurf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">my_metasurface</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/api/my_metasurface.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="my-metasurface">
+<h1>my_metasurface<a class="headerlink" href="#my-metasurface" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cemd_metasurf.</span></span><span class="sig-name descname"><span class="pre">Metasurface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">th</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface" title="Permalink to this definition"></a></dt>
+<dd><p>Class for defining the metasurface
+“a” and “b” are the lengths of the lattice vectors (“a” along the x-axis) and “th” is the angle between the lattice vectors.
+For example the lattice vector “hat(v_1)” and “hat(v_2)” would be:
+“hat(v_1) = a hat(x)”, 
+“hat(v_2) = b (cos(th)*hat(x) + sin(th)*hat(y))”.
+Note that “norm(hat(v_1)) = a” and “norm(hat(v_2)) = b”.
+“x”, “y” and “z” defined the position of the particles in the unit cell.
+“eps_b” is the backgroud permittivity and the permittivity of the layred substrate (if present).
+“d_layer” defined the with of the layered substrate (if present).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float</em>) – Length lattice vector along the x-axis</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Length lattice vector along the other axis (defined by the :param th)</p></li>
+<li><p><strong>x</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the x-axis of the particles that composed the unit cell.</p></li>
+<li><p><strong>y</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the y-axis of the particles that composed the unit cell.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the z-axis of the particles that composed the unit cell.</p></li>
+<li><p><strong>th</strong> (<em>float</em>) – Angle between lattice vectors.</p></li>
+<li><p><strong>eps_b</strong> – Permittivity of the media.</p></li>
+<li><p><strong>d_layer</strong> – It will defined the width of the layers of the substrate.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.get_bloch">
+<span class="sig-name descname"><span class="pre">get_bloch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.get_bloch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.get_bloch" title="Permalink to this definition"></a></dt>
+<dd><p>Return the actual Bloch wave configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple with the Bloch wave configuration (k, kx and ky)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.get_lattice">
+<span class="sig-name descname"><span class="pre">get_lattice</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.get_lattice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.get_lattice" title="Permalink to this definition"></a></dt>
+<dd><p>Return lattice parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple with the lattice parameters a, b and th.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.get_unit_cell">
+<span class="sig-name descname"><span class="pre">get_unit_cell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.get_unit_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.get_unit_cell" title="Permalink to this definition"></a></dt>
+<dd><p>Return unit cell configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple with the position of the particles in the unit cell (x, y and z)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_alpha">
+<span class="sig-name descname"><span class="pre">set_alpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_alpha" title="Permalink to this definition"></a></dt>
+<dd><p>Set the polarizability to the one defined in self.particles at the inner wavevector (self.k).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_alpha_user_defined">
+<span class="sig-name descname"><span class="pre">set_alpha_user_defined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_alpha_user_defined"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_alpha_user_defined" title="Permalink to this definition"></a></dt>
+<dd><p>Set the polarizability to a given specific matrix.
+At the moment is not really used (“set_alpha” is the one used for setting the polarizability 
+for calculating r and t), but in the future I would like to give more flexibility to the code
+and, for example, being able of easyly set quirality (modify the off-diagonal matrices of alp).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>alp</strong> (<em>numpy.ndarray</em>) – Polarizability of the system.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_bloch">
+<span class="sig-name descname"><span class="pre">set_bloch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_bloch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_bloch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_bloch" title="Permalink to this definition"></a></dt>
+<dd><p>Set the actual Bloch wavevector configuration (it takes the last entry of my_bloch).
+“k” is the wavevector in the medium where the metasurface is placed (k = 2pi/lambda*sqrt(eps_b[0]))
+By the moment, “eps_b” is a number, but it will be generized in the future for supporting substrates.
+“kx” and “ky” are the Bloch wavevector (periodicity along the metasurface plane).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>my_bloch</strong> (<em>classes.BlochWavevector</em>) – The object with the information of the wavevectos</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_lattice">
+<span class="sig-name descname"><span class="pre">set_lattice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">th</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_lattice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_lattice" title="Permalink to this definition"></a></dt>
+<dd><p>Set the properties of the lattice (lattice vectors and the angle between them).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float</em>) – Length lattice vector along the x-axis</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Length lattice vector along the other axis (defined by the :param th)</p></li>
+<li><p><strong>th</strong> (<em>float</em>) – Angle between lattice vectors.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_particle_i">
+<span class="sig-name descname"><span class="pre">set_particle_i</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_particle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_particle_i"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_particle_i" title="Permalink to this definition"></a></dt>
+<dd><p>Set the particle “i” to have the properties given by “my_particle”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>my_particle</strong> (<em>classes.ParticleMie</em><em> (or </em><em>other particle</em><em>)</em><em>.</em>) – The object with the information of the particle.</p></li>
+<li><p><strong>i</strong> (<em>Int</em>) – Index of the particle that will be set.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_particles">
+<span class="sig-name descname"><span class="pre">set_particles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_particle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_particles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_particles" title="Permalink to this definition"></a></dt>
+<dd><p>Set all particle to have the properties given by “my_particle”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>my_particle</strong> (<em>classes.ParticleMie</em><em> (or </em><em>other particle</em><em>)</em>) – The object with the information of the particle.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.Metasurface.set_unit_cell">
+<span class="sig-name descname"><span class="pre">set_unit_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#Metasurface.set_unit_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.Metasurface.set_unit_cell" title="Permalink to this definition"></a></dt>
+<dd><p>Set the position of the particles in the unit cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the x-axis of the particles that composed the unit cell.</p></li>
+<li><p><strong>y</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the y-axis of the particles that composed the unit cell.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Position in the z-axis of the particles that composed the unit cell.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cemd_metasurf.BlochWavevector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cemd_metasurf.</span></span><span class="sig-name descname"><span class="pre">BlochWavevector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ky</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#BlochWavevector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.BlochWavevector" title="Permalink to this definition"></a></dt>
+<dd><p>Class to handle the Bloch wavevectors
+“k” is the wavevector (in the medium).
+“kx” and “ky” are the Bloch wavevector (periodicity along unit cells).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Wavevector in the medium.</p></li>
+<li><p><strong>kx</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Bloch wavevector (Floquet periodicity) along the x-axis.</p></li>
+<li><p><strong>ky</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em>) – Bloch wavevector (Floquet periodicity) along the y-axis.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.BlochWavevector.get_bloch">
+<span class="sig-name descname"><span class="pre">get_bloch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#BlochWavevector.get_bloch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.BlochWavevector.get_bloch" title="Permalink to this definition"></a></dt>
+<dd><p>Get the wavevectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple with the Bloch wavevectors (k, kx and ky)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.BlochWavevector.get_bloch_i">
+<span class="sig-name descname"><span class="pre">get_bloch_i</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#BlochWavevector.get_bloch_i"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.BlochWavevector.get_bloch_i" title="Permalink to this definition"></a></dt>
+<dd><p>Get the wavevector at index “i”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>Int</em>) – Index of the particle that will be set.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple with the Bloch wavevectors (k, kx and ky)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cemd_metasurf.ParticleMie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cemd_metasurf.</span></span><span class="sig-name descname"><span class="pre">ParticleMie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/my_metasurface.html#ParticleMie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.ParticleMie" title="Permalink to this definition"></a></dt>
+<dd><p>Class to set the properties of the particle to a Mie particle with a permittivity
+given by a Drude-Lorentz model (at the moment with one single resonance).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r_p</strong> (<em>Float</em>) – Radius of the particles.</p></li>
+<li><p><strong>ei</strong> (<em>Float</em>) – Permittivity at high frecuencies (avobe resonances).</p></li>
+<li><p><strong>wp</strong> (<em>Float</em><em> (</em><em>I will generalize it to an array setting several resonances</em><em>)</em>) – Plasma frequency.</p></li>
+<li><p><strong>wr</strong> (<em>Float</em><em> (</em><em>I will generalize it to an array setting several resonances</em><em>)</em>) – Resonant frequency.</p></li>
+<li><p><strong>gr</strong> (<em>Float</em><em> (</em><em>I will generalize it to an array setting several resonances</em><em>)</em>) – Width of the resonance.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../index.html" class="btn btn-neutral float-left" title="cemd metasurf’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="polarizability.html" class="btn btn-neutral float-right" title="polarizability" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Diego Romero Abujetas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

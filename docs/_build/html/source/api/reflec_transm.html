@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reflec_transm &mdash; cemd metasurf  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reflectance at constant angle of incidence" href="../examples/example_rt.html" />
+    <link rel="prev" title="depolarization_gf" href="depolarization_gf.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            cemd metasurf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Modules</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="my_metasurface.html">my_metasurface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polarizability.html">polarizability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="depolarization_gf.html">depolarization_gf</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">reflec_transm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr"><code class="docutils literal notranslate"><span class="pre">ReTr</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.calc_rt_kxky"><code class="docutils literal notranslate"><span class="pre">ReTr.calc_rt_kxky()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.clean_array_k_rt"><code class="docutils literal notranslate"><span class="pre">ReTr.clean_array_k_rt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.clear_array_k_rt"><code class="docutils literal notranslate"><span class="pre">ReTr.clear_array_k_rt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.get_rt"><code class="docutils literal notranslate"><span class="pre">ReTr.get_rt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodule">Submodule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cemd_metasurf.reflec_transm.rt_functions"><code class="docutils literal notranslate"><span class="pre">rt_functions</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/example_rt.html">Reflectance at constant angle of incidence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/example_rt.html#id1">Reflectance at constant angle of incidence</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">cemd metasurf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">reflec_transm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/source/api/reflec_transm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="reflec-transm">
+<h1>reflec_transm<a class="headerlink" href="#reflec-transm" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.reflec_transm.ReTr">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cemd_metasurf.reflec_transm.reflec_transm.</span></span><span class="sig-name descname"><span class="pre">ReTr</span></span><a class="reference internal" href="../../_modules/cemd_metasurf/reflec_transm/reflec_transm.html#ReTr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.reflec_transm.ReTr.calc_rt_kxky">
+<span class="sig-name descname"><span class="pre">calc_rt_kxky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_bloch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_ini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/reflec_transm/reflec_transm.html#ReTr.calc_rt_kxky"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.calc_rt_kxky" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the de reflectance (R) and transmitance (T) for a transverse electric (TE) or 
+transverse magnetic (TM) incoming planw wave at all Bloch waves stored in array_k_gb.</p>
+<p>If a my_bloch is given, R and T will be calculated over this values, by calculating first
+the depolarization Green function (gb). Consider that in this case, the value of ind_ini
+is set to the size of the previous self.array_k_gb.shape, in order of only calculating
+R and T for the given my_bloch.
+Also, clear.array_k_rt() and clear.array_k_gb() are called at the end if my_bloch is given.</p>
+<p>The values are stored in “array_k_rt”, with dimension along “axis = 1” (columns) are:
+1. k
+2. kx
+3. ky
+4. n
+5. m
+6. r_tm
+7. r_te
+8. t_tm
+9. t_te</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>my_bloch</strong> (<em>classes.BlochWavevector</em>) – The object with the information of the wavevectos. By default it is not needed, using the wavevetors stored in self.array_k_gb. If a my_bloch is used, R and T would be calculated over these values.</p></li>
+<li><p><strong>ind_ini</strong> (<em>Int</em>) – From which value of the stored gb start to calculate R and T (try to generilized to a range). Only used is “my_bloch = None”.</p></li>
+<li><p><strong>n</strong> (<em>Int</em>) – Diffractive order along x-axis.</p></li>
+<li><p><strong>m</strong> (<em>Int</em>) – Diffractive order along the other axis defined by :param th.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.reflec_transm.ReTr.clean_array_k_rt">
+<span class="sig-name descname"><span class="pre">clean_array_k_rt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/reflec_transm/reflec_transm.html#ReTr.clean_array_k_rt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.clean_array_k_rt" title="Permalink to this definition"></a></dt>
+<dd><p>Clean the stored reflectance and transmitance.
+Remove repeted rows and sort by k -&gt; kx -&gt; ky -&gt; n -&gt; m.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.reflec_transm.ReTr.clear_array_k_rt">
+<span class="sig-name descname"><span class="pre">clear_array_k_rt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/reflec_transm/reflec_transm.html#ReTr.clear_array_k_rt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.clear_array_k_rt" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the stored reflectance and transmitance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.reflec_transm.ReTr.get_rt">
+<span class="sig-name descname"><span class="pre">get_rt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cemd_metasurf/reflec_transm/reflec_transm.html#ReTr.get_rt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cemd_metasurf.reflec_transm.reflec_transm.ReTr.get_rt" title="Permalink to this definition"></a></dt>
+<dd><p>Return reflectance and transmitance.
+For konwing “(k, kx, ky) and “(n, m)” look self.array_k_rt.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple with R and T</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="submodule">
+<h2>Submodule<a class="headerlink" href="#submodule" title="Permalink to this heading"></a></h2>
+<p>The file rt_functions.py contains all the function needed to use the class ReTr.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cemd_metasurf.reflec_transm.rt_functions">
+<span class="sig-prename descclassname"><span class="pre">cemd_metasurf.reflec_transm.</span></span><span class="sig-name descname"><span class="pre">rt_functions</span></span><a class="headerlink" href="#cemd_metasurf.reflec_transm.rt_functions" title="Permalink to this definition"></a></dt>
+<dd><p>alias of &lt;module ‘cemd_metasurf.reflec_transm.rt_functions’ from ‘/home/diego/Documentos/Python/Librerias_Github/cemd_metasurf/cemd_metasurf/reflec_transm/rt_functions.py’&gt;</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="depolarization_gf.html" class="btn btn-neutral float-left" title="depolarization_gf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples/example_rt.html" class="btn btn-neutral float-right" title="Reflectance at constant angle of incidence" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Diego Romero Abujetas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
