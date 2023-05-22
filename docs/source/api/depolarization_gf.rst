@@ -1,6 +1,6 @@
-=================
-depolarization_gf
-=================
+========================
+Module depolarization_gf
+========================
 
 
 .. currentmodule:: cemd_metasurf.depolarization_gf
@@ -9,13 +9,14 @@ depolarization_gf
     :members:
     
 
-Submodule
----------
+Sub-functions
+-------------
 
-The file depolarization_functions.py contains all the function needed to use the class DGreenFunction.
 
-.. autoclass:: cemd_metasurf.depolarization_gf.depolarization_functions
-   :members:
+.. automodule:: cemd_metasurf.depolarization_gf.depolarization_functions
+    :members:
+    :private-members:
+    :special-members:
 
     
 

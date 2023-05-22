@@ -1,12 +1,13 @@
-==============
-polarizability
-==============
-
+=====================
+Module polarizability
+=====================
 
 .. currentmodule:: cemd_metasurf.polarizability
 
-.. autoclass:: cemd_metasurf.polarizability.mie_functions
+.. automodule:: cemd_metasurf.polarizability.mie_functions
     :members:
+    :private-members:
+    :special-members:
 
 
 
