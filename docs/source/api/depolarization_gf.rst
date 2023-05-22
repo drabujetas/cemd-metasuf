@@ -10,7 +10,7 @@ depolarization_gf
     
 
 Submodule
-----------
+---------
 
 The file depolarization_functions.py contains all the function needed to use the class DGreenFunction.
 
