@@ -1,50 +1,43 @@
-# Author: Diego Romero Abujetas, March 2023, diegoromeabu@gmail.com
-#
-# This file contain all the functions needed to calculate the depolarization Green function
-# of a free standing metasurface of one particle per unit cell. The list of functions included in this file are:
-#
-# Calculation of the depolarization Green function for 1 particle per unit cell .
-# - GbCalc_1UC_Cyx_th_mode, Gb_Ch, Gb1D_kx 		
-#
-# The next libraries are used
+"""
+The file depolarization_functions.py contain all the functions needed to calculate the depolariztion function and for the class DGreenFunction.
+
+List of functions: 
+    - calc_gb_1puc     (depolarization Green function for one partilce per unit cell)
+    - calc_gb_1d_kx    (depolarization Green function for one dimensional arrays, like an array of cylinders)
+    - calc_gb_ch      (depolarization Green function for a chain of particles)
+    - polylog_2, polylog_3, clausen2 (implementation of polylog functions at the unit circle)
+"""
 
 import numpy as np
-#import scipy.special as sps
-#from mpmath import mp
-
-# GbCalc_1UC: Function that calculates the Green function ("GbCalc") 
-# for an 2D array with one particle per unit cell ("1UC").
-#
-# Inputs:
-#
-# "a" and "b" are the lattice constant along the "x" axis and "sin(th)y +
-# cos(th)x" axis. For example, the rectangular lattice is recovered for 
-# "th = pi/2", while for "th = pi/3" and "a = b" a triangular lattice is recovered.
-#
-# "k" is the wavector in the metasurface medium ()"k = k0*n_bg").
-#
-# "kx" and "ky" are the projection of the wavevector along "x" and "y" axis.
-# They are real quantities, while "k" can be complex.
-#
-# "n_sum" and "n_l" are the number of elements taken in the sum. For bigger "n_sum"
-# the convergence is better, but be careful with "n_l". With "n_l = 4" is
-# enough to get a good convergence, but for bigger "n_l" is necessary to take
-# bigger "n_sum" to get convergence. See PRB 2020, D. R. Abuejetas et. al., 102, 125411 
-# for more information about the convergence and the menaing of "n_l". 
-#
-# Output:
-#
-# "Gga" is a 6 by 6 matrix with the value of the depolarization Green function.
 
 def calc_gb_1puc(my_metasurface, n_sum = 100):
+    """
+    Function that calculates the Green function for an 2D array with one particle per unit cell.
 
+    The parameters "n_sum" and "n_l" (defined in the code) are the number of elements taken in the sum. For bigger "n_sum"
+    the convergence is better, but be careful with "n_l". With "n_l = 4" is
+    enough to get a good convergence, but for bigger "n_l" is necessary to take
+    bigger "n_sum" to get convergence. See PRB 2020, D. R. Abuejetas et. al., 102, 125411 
+    for more information about the convergence and the menaing of "n_l".
+
+    For better performance at the calculation of the depolarization Green function, try to place "kx" and "ky" inside the first Brillouin zone.
+    I need to implement a function for doing that.
+
+    :param my_metasurface: Vacuum wavevector.
+    :type my_metasurface: classes.Metasurface
+    :param n_sum: Number of elements taken in the sum.
+    :type n_sum: int
+
+    :return: 6x6 deplarization matrix for 2 dimensional arrays, gb_2d.
+    """
     a, b, th = my_metasurface.get_lattice()
     k, kx, ky = my_metasurface.get_bloch()
 
-    kx = kx - np.floor( (kx + np.pi/a)/(2*np.pi/a))*(2*np.pi/a)   # bring "kx" to the first Brilluoin zone
-    ky = ky - np.floor( (ky + np.pi/b)/(2*np.pi/b))*(2*np.pi/b)
+    # I need to implement the folding for any lattice geometry.
+    #kx = kx - np.floor( (kx + np.pi/a)/(2*np.pi/a))*(2*np.pi/a)   # bring "kx" to the first Brilluoin zone for square arrays
+    #ky = ky - np.floor( (ky + np.pi/b)/(2*np.pi/b))*(2*np.pi/b)   # bring "ky" to the first Brilluoin zone for square arrays
 
-    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 3)
+    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 3) # convergence parameter
     if n_l > 10:
         n_l = 4
         raise ValueError("a/lambda >> 1")
@@ -62,35 +55,29 @@ def calc_gb_1puc(my_metasurface, n_sum = 100):
     gb_2d = gb_ch + 1/a*(gb_1d)
 
     return gb_2d
-
-
-# Gb1D_kx: Function for calculating the depolarization Green function for an array of 1D cylinders
-# or particles with translational symmetry along the "x" axis ("Gb1D") where the projection of the 
-# wavevector can be also along the "x" axis ("kx"), where the convergence of the sums are below "to 1/m^3" (s3). 
-# Therefore, the cylinder axis is along the "x"  axis and they are periodically spaced along the "y" axis. 
-# The sum is done in reciprocal space.
-# 
-# This function do the same that "Gb1D_kx", but here is rewritten to avoid recalculation, and 
-# also all the sums are expressed with convergence better than "1/m^3".
-#
-# Inputs:
-#
-# "N" is the number of terms taken in the sums.
-#
-# "b" is the distance between the particles (along the "y" axis).
-#
-# "k" is the wavector in the metasurface medium ()"k = k0*n_bg").
-#
-# "kx" and "ky" are the projection of the wavevector along "x" and "y" axis.
-# "kx" is along the translational symmetry axis and "ky" along the direction of the periodicity.
-# They are real quantities, while "k" can be complex.
-#
-# Output:
-#
-# "Gb1D" is a 6 by 6 matrix with the depolarization Green tensor.
     
 def calc_gb_1d_kx(n_sum,b,k,ky,kx):
+    """
+    Function for calculating the depolarization Green function for an array of 1D cylinders
+    or particles with translational symmetry along the "x" axis where the projection of the 
+    wavevector is along the "x" axis.
+    Therefore, the cylinder axis is along the "x" axis and they are periodically spaced along the "y" axis. 
+    
+    Also, the sums have been rewriten to performe a convergence better than "1/m^3".
 
+    :param n_sum: Number of elements taken in the sum.
+    :type n_sum: int
+    :param b: Lattice constant along the y-axis.
+    :type b: float
+    :param k: Wavevector in the medium.
+    :type k: float
+    :param ky: Bloch wavevector (Floquet periodicity) along the y-axis.
+    :type ky: float
+    :param kx: Periodicity along the trnslational symmetry x-axis.
+    :type kx: float
+
+    :return: 6x6 deplarization matrix for 1 dimensional arrays, gb_1d. 
+    """
     g_euler = 0.577215664901532860606512090082402431042
     zr_3 = 1.2020569031595942853997381615114499907 #zeta Riemann evaluated at z = 3 
     f3 = (b/(2*np.pi))**3*zr_3
@@ -130,7 +117,7 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
     return gb_1d
 
 
-# "Gb_Ch" calculates the depolarization Green function of chain of particles align along the "x" axis
+# "Gb_Ch" calculates the depolarization Green function of a chain of particles align along the "x" axis
 # oriented for the calculation of "Gb" of an two dimensional array.
 #
 # Inputs:
@@ -144,7 +131,19 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
 # GbCh is the contribution of the chain to the depolarization Green function of the two dimensional array.
 
 def calc_gb_ch(d,k,kp):
+    """
+    Function for calculating the depolarization Green function of a chain of particles align along the "x" axis
+    oriented for the calculation of "Gb" of an two dimensional array.
+    
+    :param d: Lattice constant along the x-axis.
+    :type d: float
+    :param k: Wavevector in the medium.
+    :type k: float
+    :param kp: Projection of the wavevector over the axis of the chain.
+    :type kp: float
 
+    :return: 6x6 deplarization matrix for a chain of particles, gb_ch. 
+    """
     arg_minus = np.exp(1j * (k-kp) * d)
     arg_plus = np.exp(1j * (k+kp) * d)
 
@@ -192,7 +191,14 @@ def calc_gb_ch(d,k,kp):
 # The output is the evaluation of the polylogarithm functions of order 2 at the unit circle.
 
 def polylog_2(z):
-    
+    """
+    Evaluation of the polylogarithm functions of order 2 at the unit circle.
+
+    :param z: Argument. Complex number of modulo 1 (np.abs(z) = 1).
+    :type z: numpy.complex
+
+    :return: Polylogarithm functions of order 2 at z.
+    """
     theta = np.arctan2(z.imag,z.real)
 
     li2_i = clausen2(theta)
@@ -204,32 +210,32 @@ def polylog_2(z):
 
     return li2_r + 1j*li2_i
 
-# "polylog_3" evaluates the polylogarithm functions of order 3 at the unit circle.
-#
-# Inputs: 
-#
-# "z" is the complex number of modulo 1 (abs(z) = 1) where the function is evaluated.
-#
-# Outputs:
-#
-# The output is the evaluation of the polylogarithm functions of order 3 at the unit circle.
-
 def polylog_3(z, n_sum = 50):
-    
+    """
+    Evaluation of the polylogarithm functions of order 3 at the unit circle.
+
+    :param z: Argument. Complex number of modulo 1 (np.abs(z) = 1).
+    :type z: numpy.complex
+
+    :return: Polylogarithm functions of order 3 at z.
+    """
     n = np.arange(1,n_sum+1)
     li3 = z**n/n**3
 
     return li3.sum()
-
-# Evaluation of Clausen function or order 2 need it for the evaluation of "polylog_2"
-#
-# \\operatorname{Cl}_2(x) = -\\int_0^x \\log|2\\sin(t/2)| dt
-#
-# Original code in julia of Alexander Voigt with Licence: MIT
-# Implementation in python of the code by Diego Romero Abujetas
-
+#\mathrm{Cl}_2(x) = - \int_0^x \log\left[ 2\sin\left(\frac{t}{2}\right)\right] \mathrm{d}t
 def clausen2(x):
+    """
+    Evaluation of Clausen function of order 2 needed for the evaluation of "polylog_2".
 
+    :param x: The input value.
+    :return: The value of the Clausen function of order 2.
+
+    :math:`\mathrm{Cl}_2(x) = - \int_0^x \log \Big[ 2\sin  t/2 \Big]\mathrm{d}t`.
+
+    Original code in Julia by Alexander Voigt with MIT License.
+    Python implementation by Diego Romero Abujetas.
+    """
     # reduce range of x to [0,pi] for even Clausen functions
     sgn = 1
     if x<0:

@@ -22,3 +22,6 @@ class ReTrTestClass(unittest.TestCase):
 	def test_clear_rt(self):
 		self.metasurface.clear_array_k_rt()
 		self.assertEqual(type(self.metasurface.array_k_rt), type(None))
+
+	def test_clean_rt(self):
+		self.metasurface.clean_array_k_rt()

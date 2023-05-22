@@ -1,3 +1,6 @@
+"""
+Here the class ReTr for calculating refletion and tranmission can be found.
+"""
 
 import numpy as np	
 from . import rt_functions as rtf

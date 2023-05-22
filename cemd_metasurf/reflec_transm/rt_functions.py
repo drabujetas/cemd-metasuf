@@ -1,43 +1,37 @@
-# Author: Diego Romero Abujetas, March 2023, diegoromeabu@gmail.com
-#
-# This file contain all the functions needed to calculate reflectance and transmittance.
-# of a free standing metasurface of one particle per unit cell. The list of functions included in this file are:
-#
-# Calculation of reflectance and transmittance.
-# - calc_rt_complex, calc_rt, calc_RT_pol
+"""
+The file rt_functions.py contain all the functions needed to calculate the reflection and tranmision.
+
+List of functions: 
+    - calc_rt_complex   (reflectivity and transmitivity for TE and TM waves)
+    - calc_rt          (reflectance and transmitance for TE and TM waves)
+    - calc_rt_pol      (reflectance and transmitance for a given polarization)
+"""
 
 import numpy as np
 
-# calc_rt: Function that calculates complex the specular reflection and transmission (rt) for TE and TM incidence.
-#
-# Inputs:
-#
-# "a" and "b" are the lattice constant along the "x" axis and "sin(th)y +
-# cos(th)x" axis. For example, the rectangular lattice is recovered for 
-# "th = pi/2", while "th = pi/3" and "a = b" is a triangular lattice.
-#
-# "gb" is the depolarization Green function, a "6 by 6" matrix.
-#
-# "alp" is a "6 by 6" matrix with the electric and magnetic polarizability of the particles.
-#
-# "k" is a scalar with the values of the wavevector in the external media ("k = k0*n_b").
-#
-# "kx" and "ky" are the projection of the wavevector along "x" and "y" axis.
-#
-# Outputs:
-#
-# The output are the complex reflection and transmission (scalars) for different incident
-# polarizations (r_tm, t_tm, r_te, t_te).
-#
+def calc_rt_complex(my_metasurface):
+    """
+    Function that calculates complex amplitude specular reflection and transmission (r and t) for TE and TM incidence waves.
 
-def calc_rt_complex(my_metasurface, alp):
-    
+    :param my_metasurface: Vacuum wavevector.
+    :type my_metasurface: classes.Metasurface
+
+    :return:
+        - The first element is the reflection for TM waves, r_tm.
+        - The second element is the reflection for TE waves, r_te.
+        - The third element is the transmission for TM waves, t_tm.
+        - The fourth element is the transmission for TE waves, t_te.
+    """
     a, b, th = my_metasurface.get_lattice()
     gb = my_metasurface.gb_kxky
+    alp = my_metasurface.alp_uc
     k, kx, ky = my_metasurface.get_bloch()
 
     alp = k ** 2 * alp   
     gb_alp = np.linalg.inv( np.eye(6) - np.dot(gb, alp) )
+
+    if k ** 2 - kx ** 2 - ky ** 2 < 0:
+        raise ValueError("The incoming wave is an evanescent wave")
 
     kz = np.sqrt(k ** 2 - kx ** 2 - ky ** 2)
     ang1 = np.arccos(kz/k)
@@ -82,33 +76,21 @@ def calc_rt_complex(my_metasurface, alp):
         t_te = et_te[0,0]/ei_te[0,0]
 
     return r_tm, r_te, t_tm, t_te 
-    
-    
-# calc_RT: Function that calculates the reflectance and transmittance (RT) for TE and TM incidence.
-#
-# Inputs:
-#
-# "a" and "b" are the lattice constant along the "x" axis and "sin(th)y +
-# cos(th)x" axis. For example, the rectangular lattice is recovered for 
-# "th = pi/2", while "th = pi/3" and "a = b" is a triangular lattice.
-#
-# "gb" is the depolarization Green function, a "6 by 6" matrix.
-#
-# "alp" is a "6 by 6" matrix with the electric and magnetic polarizability of the particles.
-#
-# "k" is a scalar with the values of the wavevector in the external media ("k = k0*n_b").
-#
-# "kx0" and "ky0" are the proyection of the wavevector along "x" and "y" axis.
-#
-# "n" and "m" is the calculated diffraction order ("n = m = 0" is the specular mode).
-#
-# Outputs:
-#
-# The output are the reflectance and transmittance (scalars) for different incident
-# polarizations (r_tm, t_tm, r_te, t_te).
 
 def calc_rt(my_metasurface, n = 0, m = 0):
-    
+    """
+    Function that calculates reflectance and transmitance (R and T) for TE and TM incidence waves at different
+    diffractive orders.
+
+    :param my_metasurface: Vacuum wavevector.
+    :type my_metasurface: classes.Metasurface
+    :param n: Diffractive order along x-axis.
+    :type n: int
+    :param m: Diffractive order along the other axis (y-axis for rectangular arrays).
+    :type m: int
+
+    :return: array with the reflectance and transmitance at both polarizations
+    """
     a, b, th = my_metasurface.get_lattice()
     gb = my_metasurface.gb_kxky
     alp = my_metasurface.alp_uc
@@ -118,7 +100,7 @@ def calc_rt(my_metasurface, n = 0, m = 0):
     gb_alp = np.linalg.inv( np.eye(6) - np.dot(gb, alp) )
     
     if k ** 2 - kx0 ** 2 - ky0 ** 2 < 0:
-        raise ValueError("The oncoming wave is an evanescent wave")
+        raise ValueError("The incoming wave is an evanescent wave")
 
     kz0 = np.sqrt(k ** 2 - kx0 ** 2 - ky0 ** 2) #by definition, must be real
     ang1 = np.arccos(kz0/k)
@@ -211,14 +193,37 @@ def calc_rt(my_metasurface, n = 0, m = 0):
 #
 # The output are the reflectance and transmittance (scalars) at the specific polarization.
  
-def calc_rt_pol(my_metasurface, alp, polTM = 1, polTE = 1j, n = 0, m = 0):
-        
+def calc_rt_pol(my_metasurface, pol_tm = 1, pol_te = 1j, n = 0, m = 0):
+    """
+    Function that calculates reflectance and transmitance (R and T) for a given incidence wave at different
+    diffractive orders. By default is a circular polarized wave.
+
+    :param my_metasurface: Vacuum wavevector.
+    :type my_metasurface: classes.Metasurface
+    :param pol_tm: TM amplitude.
+    :type pol_tm: complex
+    :param pol_te: TE amplitude.
+    :type pol_te: complex
+    :param n: Diffractive order along x-axis.
+    :type n: int
+    :param m: Diffractive order along the other axis (y-axis for rectangular arrays).
+    :type m: int
+
+    :return:
+        - The first element is the reflectance, r_pol.
+        - The second element is the reflectance, t_pol.
+    """
     a, b, th = my_metasurface.get_lattice()
     k, kx0, ky0 = my_metasurface.get_bloch()
+    alp = my_metasurface.alp_uc
+
     alp = k ** 2 * alp
     
     gb_alp = np.linalg.inv( np.eye(6) - np.dot(gb, alp) )
     
+    if k ** 2 - kx0 ** 2 - ky0 ** 2 < 0:
+        raise ValueError("The incoming wave is an evanescent wave")
+
     kz0 = np.sqrt(k ** 2 - kx0 ** 2 - ky0 ** 2) #by definition, must be real
     ang1 = np.arccos(kz0/k)
     alpha2 = np.arctan2(ky0,kx0)
@@ -251,29 +256,29 @@ def calc_rt_pol(my_metasurface, alp, polTM = 1, polTE = 1j, n = 0, m = 0):
               
         ei_tm = np.transpose(np.array([[np.cos(ang1)*np.cos(alpha2),np.cos(ang1)*np.sin(alpha2),-np.sin(ang1),-np.sin(alpha2),np.cos(alpha2),0]]))
         ei_te = np.transpose(np.array([[np.sin(alpha2),-np.cos(alpha2),0,np.cos(ang1)*np.cos(alpha2),np.cos(ang1)*np.sin(alpha2),-np.sin(ang1)]]))
-        Ei = (ei_tm*polTM + ei_te*polTE)/np.abs(polTM + polTE)
+        ei = (ei_tm*pol_tm + ei_te*pol_te)/np.abs(pol_tm + pol_te)
         
         if m == 0 and n == 0:
             w_t = 1
         else:
             w_t = 0
         
-        Ef = np.dot(gb_alp, Ei)
+        ef = np.dot(gb_alp, ei)
         
-        Er = grf @ alp @ Ef
-        Et = gtf @ alp @ Ef + Ei*w_t
+        er = grf @ alp @ ef
+        et = gtf @ alp @ ef + ei*w_t
         
-        EEi = np.transpose(np.conj(Ei)) @ sz @ Ei 
+        eei = np.transpose(np.conj(ei)) @ sz @ ei 
 
-        R = - (np.transpose(np.conj(Er)) @ sz @ Er)/EEi
-        T = + (np.transpose(np.conj(Et)) @ sz @ Et)/EEi
+        r_pol = - (np.transpose(np.conj(er)) @ sz @ er)/eei
+        t_pol = + (np.transpose(np.conj(et)) @ sz @ et)/eei
 	                
     else:
         
-        R = 0 
-        T = 0 
+        r_pol = 0 
+        t_pol = 0 
 
-    return np.real(R), np.real(T) 
+    return np.real(r_pol), np.real(t_pol) 
 
 
 

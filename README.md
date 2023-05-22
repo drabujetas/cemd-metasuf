@@ -16,6 +16,9 @@ The current version can calculate reflection and transmissionn for lattices with
 For any comment feel free to contact me!
 drabujetas@gmail.com
 
+The documentation can be found at
+https://cemd-metasuf.readthedocs.io/
+
 ### Examples
 The next two examples calculate the reflectance of a square array with the same parameters as used in [D.R. Abujetas, et. al., PRB, 102, 125411 (2020)].
 
