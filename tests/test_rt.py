@@ -15,6 +15,8 @@ class ReTrTestClass(unittest.TestCase):
 		kx = k*np.sin(50*np.pi/180) 
 		my_bloch = BlochWavevector(k,kx,ky)
 		self.metasurface.calc_rt_kxky(my_bloch)
+		self.metasurface.calc_rt_complex_kxky(my_bloch)
+		self.metasurface.calc_rt_pol_kxky(my_bloch)
 
 	def test_get_rt(self):
 		r_tm, r_te, t_tm, t_te = self.metasurface.get_rt()
@@ -25,3 +27,23 @@ class ReTrTestClass(unittest.TestCase):
 
 	def test_clean_rt(self):
 		self.metasurface.clean_array_k_rt()
+
+	def test_get_rt_complex(self):
+		r_tm, r_te, t_tm, t_te = self.metasurface.get_rt_complex()
+
+	def test_clear_rt_complex(self):
+		self.metasurface.clear_array_k_rt_complex()
+		self.assertEqual(type(self.metasurface.array_k_rt_complex), type(None))
+
+	def test_clean_rt_complex(self):
+		self.metasurface.clean_array_k_rt_complex()
+
+	def test_get_rt_pol(self):
+		r_tm, t_pol = self.metasurface.get_rt_pol()
+
+	def test_clear_rt_pol(self):
+		self.metasurface.clear_array_k_rt_pol()
+		self.assertEqual(type(self.metasurface.array_k_rt_pol), type(None))
+
+	def test_clean_rt_pol(self):
+		self.metasurface.clean_array_k_rt_pol()

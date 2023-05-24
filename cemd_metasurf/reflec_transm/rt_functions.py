@@ -16,11 +16,7 @@ def calc_rt_complex(my_metasurface):
     :param my_metasurface: Vacuum wavevector.
     :type my_metasurface: classes.Metasurface
 
-    :return:
-        - The first element is the reflection for TM waves, r_tm.
-        - The second element is the reflection for TE waves, r_te.
-        - The third element is the transmission for TM waves, t_tm.
-        - The fourth element is the transmission for TE waves, t_te.
+    :return: array with complex amplitude specular reflection and transmissionat both polarizations
     """
     a, b, th = my_metasurface.get_lattice()
     gb = my_metasurface.gb_kxky
@@ -75,7 +71,8 @@ def calc_rt_complex(my_metasurface):
         r_te = er_te[0,0]/ei_te[0,0]
         t_te = et_te[0,0]/ei_te[0,0]
 
-    return r_tm, r_te, t_tm, t_te 
+    return np.array([r_tm,r_te,t_tm,t_te]) 
+
 
 def calc_rt(my_metasurface, n = 0, m = 0):
     """
@@ -89,7 +86,7 @@ def calc_rt(my_metasurface, n = 0, m = 0):
     :param m: Diffractive order along the other axis (y-axis for rectangular arrays).
     :type m: int
 
-    :return: array with the reflectance and transmitance at both polarizations
+    :return: array with the reflectance and transmitance at both polarizations.
     """
     a, b, th = my_metasurface.get_lattice()
     gb = my_metasurface.gb_kxky
@@ -165,34 +162,7 @@ def calc_rt(my_metasurface, n = 0, m = 0):
 
     return np.array([r_tm,r_te,t_tm,t_te])
     
-    
-# calc_RT: Function that calculates the reflectance and transmittance (RT) for an arbitrary plane wave incidence.
-#
-# Inputs:
-#
-# "a" and "b" are the lattice constant along the "x" axis and "sin(th)y +
-# cos(th)x" axis. For example, the rectangular lattice is recovered for 
-# "th = pi/2", while "th = pi/3" and "a = b" is a triangular lattice.
-#
-# "gb" is the depolarization Green function, a "6 by 6" matrix.
-#
-# "alp" is a "6 by 6" matrix with the electric and magnetic polarizability of the particles.
-#
-# "k" is a scalar with the values of the wavevector in the external media ("k = k0*n_b").
-#
-# "kx0" and "ky0" are the projection of the wavevector along "x" and "y" axis.
-#
-# "polTM" and "polTE" determine the projection of the incoming wave into "TM" and "TE" incidence.
-# For exaple:
-#	- "polTM = 1", "polTE = 0" --> TM incidence
-#	- "polTM = 1", "polTE = 1j" --> circular polarized light
-#
-# "n" and "m" is the calculated diffraction order ("n = m = 0" is the specular mode).
-#
-# Outputs:
-#
-# The output are the reflectance and transmittance (scalars) at the specific polarization.
- 
+
 def calc_rt_pol(my_metasurface, pol_tm = 1, pol_te = 1j, n = 0, m = 0):
     """
     Function that calculates reflectance and transmitance (R and T) for a given incidence wave at different
@@ -209,11 +179,10 @@ def calc_rt_pol(my_metasurface, pol_tm = 1, pol_te = 1j, n = 0, m = 0):
     :param m: Diffractive order along the other axis (y-axis for rectangular arrays).
     :type m: int
 
-    :return:
-        - The first element is the reflectance, r_pol.
-        - The second element is the reflectance, t_pol.
+    :return: array with the reflectance and transmitance.
     """
     a, b, th = my_metasurface.get_lattice()
+    gb = my_metasurface.gb_kxky
     k, kx0, ky0 = my_metasurface.get_bloch()
     alp = my_metasurface.alp_uc
 
@@ -278,7 +247,7 @@ def calc_rt_pol(my_metasurface, pol_tm = 1, pol_te = 1j, n = 0, m = 0):
         r_pol = 0 
         t_pol = 0 
 
-    return np.real(r_pol), np.real(t_pol) 
+    return np.array([r_pol.real[0],t_pol.real[0]])
 
 
 

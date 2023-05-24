@@ -14,10 +14,9 @@ setup(
     description='Optical properties of metasurfaces made of dipolar particles',
     long_description=long_description,
     long_description_content_type="text/markdown",
+    url="https://cemd-metasuf.readthedocs.io/",
     author='Diego Romero Abujetas',
+    author_email="drabujetas@gmail.com",
     license='MIT',
     install_requires=['numpy'],
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest==4.4.1'],
-    test_suite='test',
 )

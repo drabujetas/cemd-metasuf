@@ -62,6 +62,8 @@ class Metasurface(DGreenFunction, ReTr):
 		self.ky = None
 		self.array_k_gb = None
 		self.array_k_rt = None
+		self.array_k_rt_complex = None
+		self.array_k_rt_pol = None
 
 	def set_lattice(self,a,b,th):
 		"""
@@ -200,7 +202,7 @@ class BlochWavevector:
 	Class to handle the Bloch wavevectors
 	"k" is the wavevector (in the medium).
 	"kx" and "ky" are the Bloch wavevector (periodicity along unit cells).
-	
+
 	:param k: Wavevector in the medium.
 	:type k: float or numpy.ndarray
 	:param kx: Bloch wavevector (Floquet periodicity) along the x-axis.

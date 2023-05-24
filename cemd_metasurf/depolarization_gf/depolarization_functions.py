@@ -38,8 +38,8 @@ def calc_gb_1puc(my_metasurface, n_sum = 100):
     #ky = ky - np.floor( (ky + np.pi/b)/(2*np.pi/b))*(2*np.pi/b)   # bring "ky" to the first Brilluoin zone for square arrays
 
     n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 3) # convergence parameter
-    if n_l > 10:
-        n_l = 4
+    if n_l > 7:
+        n_l = 7
         raise ValueError("a/lambda >> 1")
 
     gb_ch = calc_gb_ch(a,k,kx)
@@ -178,17 +178,6 @@ def calc_gb_ch(d,k,kp):
     
     return gb_ch
 
-# Implmentation of Polylogs 2 and 3 evaluated at the unit circle. Places in a separate file in the future.
-
-# "polylog_2" evaluates the polylogarithm functions of order 2 at the unit circle.
-#
-# Inputs: 
-#
-# "z" is the complex number of modulo 1 (abs(z) = 1) where the function is evaluated.
-#
-# Outputs:
-#
-# The output is the evaluation of the polylogarithm functions of order 2 at the unit circle.
 
 def polylog_2(z):
     """
@@ -223,7 +212,7 @@ def polylog_3(z, n_sum = 50):
     li3 = z**n/n**3
 
     return li3.sum()
-#\mathrm{Cl}_2(x) = - \int_0^x \log\left[ 2\sin\left(\frac{t}{2}\right)\right] \mathrm{d}t
+
 def clausen2(x):
     """
     Evaluation of Clausen function of order 2 needed for the evaluation of "polylog_2".

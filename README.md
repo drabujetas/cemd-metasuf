@@ -2,6 +2,9 @@
 Coupled electric and magnetic dipole (CEMD) library for calculating optical properties of metasurfaces.
 
 ### Installation
+
+Install cemd-metasurf [from PyPI](https://pypi.org/project/cemd-metasurf/) with
+
 ```
 pip install cemd-metasurf
 ```
@@ -20,6 +23,7 @@ The documentation can be found at
 https://cemd-metasuf.readthedocs.io/
 
 ### Examples
+
 The next two examples calculate the reflectance of a square array with the same parameters as used in [D.R. Abujetas, et. al., PRB, 102, 125411 (2020)].
 
 - 1. Reflectance at a constant angle of incidence.
