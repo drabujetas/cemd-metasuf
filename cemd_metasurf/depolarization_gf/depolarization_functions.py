@@ -239,7 +239,7 @@ def clausen2(x):
         sgn = -sgn
 
     # evaluation of Clausen2 function
-    if x == 0 and X == np.pi:
+    if x == 0 and x == np.pi:
         value = 0
     elif x < np.pi/2:
         P = (1.3888888888888889e-02, -4.3286930203743071e-04,
