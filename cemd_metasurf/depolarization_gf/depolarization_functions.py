@@ -4,13 +4,14 @@ The file depolarization_functions.py contain all the functions needed to calcula
 List of functions: 
     - calc_gb_1puc     (depolarization Green function for one partilce per unit cell)
     - calc_gb_1d_kx    (depolarization Green function for one dimensional arrays, like an array of cylinders)
+    - k0_assy, k1_assy (asymptotic aproximation of the Modified Bessel Function of Second Kind of order 0)
     - calc_gb_ch      (depolarization Green function for a chain of particles)
     - polylog_2, polylog_3, clausen2 (implementation of polylog functions at the unit circle)
 """
 
 import numpy as np
 
-def calc_gb_1puc(my_metasurface, n_sum = 100):
+def calc_gb_1puc(my_metasurface, n_sum = 4):
     """
     Function that calculates the Green function for an 2D array with one particle per unit cell.
 
@@ -37,7 +38,7 @@ def calc_gb_1puc(my_metasurface, n_sum = 100):
     #kx = kx - np.floor( (kx + np.pi/a)/(2*np.pi/a))*(2*np.pi/a)   # bring "kx" to the first Brilluoin zone for square arrays
     #ky = ky - np.floor( (ky + np.pi/b)/(2*np.pi/b))*(2*np.pi/b)   # bring "ky" to the first Brilluoin zone for square arrays
 
-    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 3) # convergence parameter
+    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 1) # convergence parameter
     if n_l > 7:
         n_l = 7
         raise ValueError("a/lambda >> 1")
@@ -83,52 +84,83 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
     f3 = (b/(2*np.pi))**3*zr_3
     
     m = np.linspace(1,n_sum,n_sum)
-             
-    kp = np.sqrt(k ** 2 - kx ** 2, dtype = 'complex_')
-    kz = np.sqrt(kp ** 2 - ky ** 2, dtype = 'complex_')
     
-    km = 2*np.pi*m/b
-    kym = ky - km 
-    kymm = ky + km
-    kzm = np.sqrt(kp ** 2 - kym ** 2, dtype = 'complex_')
-    kzmm = np.sqrt(kp ** 2 - kymm ** 2, dtype = 'complex_')
+    kp = np.sqrt(k**2 - kx**2, dtype = 'complex_')
     
-    fxx3 = (kz**2 + 3*ky**2)
-    fyy3 = (4*k**2*kz**2 + 12*k**2*ky**2 - 10*ky**2*kz**2 - 7*ky**4 - 3*kz**4)/4
-    fzz3 = (4*k**2*kz**2 + 12*k**2*ky**2 - 6*ky**2*kz**2 - 5*ky**4 - kz**4)/4
-    fxy3 = 2j*kp**2*ky
+    if np.abs(kx) > k and np.abs(kp)*b > 2:
+        kp = np.imag(kp)
+        kpma = kp*m*b
+        sum1 = np.sum(k0_assy(kpma))/np.pi
+        sum2 = np.sum(k1_assy(kpma)/(kpma))/np.pi
+        gb_xx = -(kp**2/k**2)*sum1
+        gb_yy = sum1*(1 + kp**2/k**2) + sum2*kp**2/k**2
+        gb_zz = sum1 - sum2*kp**2/k**2 
+        gb_xy = -kx*kp/k**2*sum2
+        gb_yz = kx/k*sum1
+        gb_zx = kp/k*sum2
     
-    sum1 = (1j*(1/(2*kz*b) - 1./4) + 1/(2*b)*(np.sum(1j/kzm + 1j/(kzmm) - 2/km - fxx3/km**3) + fxx3*f3) + 1/(2*np.pi) * (np.log(kp*b/(4*np.pi)) + g_euler))
-    sum2 = -(1/k*(1j*ky/(2*kz*b) + 1j/(2*b)*(np.sum(kym/kzm + kymm/kzmm - fxy3/km**3) + fxy3*f3) - 1/(2*np.pi)*ky))
-    
-    gb_xx = kp ** 2/k ** 2 * sum1    
-    gb_yy = (1j/(2*kz*b)*(1 - ky ** 2/k ** 2) - 1j/8*(1 + kx ** 2/k ** 2) + 1/(2*k ** 2*b)*(np.sum(1j*(k ** 2 - kym ** 2)/kzm 
-         + 1j * (k ** 2 - kymm ** 2)/kzmm - 1/km*(k ** 2 + kx ** 2 - 2*km ** 2) - fyy3/km**3 ) + fyy3*f3 ) + 1/(4*np.pi*k ** 2)*(np.log(kp*b/(4*np.pi)) + g_euler )*(k ** 2 + kx ** 2)
-         + 1/(8*np.pi*k ** 2)*(ky ** 2 - kz ** 2) + 1/6*np.pi/(k ** 2*b ** 2) )
-    gb_zz = ( 1j/(2*kz*b)*(1 - kz ** 2/k ** 2) - 1j/8*(1 + kx ** 2/k ** 2) + 1/(2*k ** 2*b)*(np.sum(1j*(k ** 2 - kzm ** 2)/kzm 
-         + 1j*(k ** 2 - kzmm ** 2)/kzmm - 1/km*(k ** 2 + kx ** 2 + 2*km ** 2) - fzz3/km**3 ) + fzz3*f3 ) + 1/(4*np.pi*k ** 2)*(np.log(kp*b/(4*np.pi)) + g_euler )*(k ** 2 + kx ** 2)
-         + 1/(8*np.pi*k ** 2)*(kz ** 2 - ky ** 2) - 1/6*np.pi/(k ** 2*b ** 2) )
-    gb_xy = kx/k * sum2
-    gb_yz = (kx/k * sum1)
-    gb_zx = -sum2
+    else:         
+        k2 = k ** 2
+        kp2 = kp ** 2
+        ky2 = ky ** 2
+        kx2 = kx ** 2
+        kz = np.sqrt(kp2 - ky2, dtype = 'complex_')
+        kz2 = kz ** 2
+        
+        km = 2*np.pi*m/b
+        kym = ky - km 
+        kymm = ky + km
+        kzm = np.sqrt(kp2 - kym ** 2, dtype = 'complex_')
+        kzmm = np.sqrt(kp2 - kymm ** 2, dtype = 'complex_')
+        
+        fxx3 = (kz2 + 3*ky2)
+        fyy3 = (4*k2*kz2 + 12*k2*ky2 - 10*ky2*kz2 - 7*ky**4 - 3*kz**4)/4
+        fzz3 = (4*k2*kz2 + 12*k2*ky2 - 6*ky2*kz2 - 5*ky**4 - kz**4)/4
+        fxy3 = 2j*kp2*ky
+
+        sum1 = (1j*(1/(2*kz*b) - 1./4) + 1/(2*b)*(np.sum(1j/kzm + 1j/(kzmm) - 2/km - fxx3/km**3) + fxx3*f3) + 1/(2*np.pi) * (np.log(kp*b/(4*np.pi)) + g_euler))
+        sum2 = -(1/k*(1j*ky/(2*kz*b) + 1j/(2*b)*(np.sum(kym/kzm + kymm/kzmm - fxy3/km**3) + fxy3*f3) - 1/(2*np.pi)*ky))
+
+        gb_xx = kp2/k2 * sum1    
+        gb_yy = (1j/(2*kz*b)*(1 - ky2/k2) - 1j/8*(1 + kx2/k2) + 1/(2*k2*b)*(np.sum(1j*(k2 - kym ** 2)/kzm 
+             + 1j * (k2 - kymm ** 2)/kzmm - 1/km*(k2 + kx2 - 2*km ** 2) - fyy3/km**3 ) + fyy3*f3 ) + 1/(4*np.pi*k2)*(np.log(kp*b/(4*np.pi)) + g_euler )*(k2 + kx2)
+             + 1/(8*np.pi*k2)*(ky2 - kz2) + 1/6*np.pi/(k2*b ** 2) )
+        gb_zz = ( 1j/(2*kz*b)*(1 - kz2/k2) - 1j/8*(1 + kx2/k2) + 1/(2*k2*b)*(np.sum(1j*(k2 - kzm ** 2)/kzm 
+             + 1j*(k2 - kzmm ** 2)/kzmm - 1/km*(k2 + kx2 + 2*km ** 2) - fzz3/km**3 ) + fzz3*f3 ) + 1/(4*np.pi*k2)*(np.log(kp*b/(4*np.pi)) + g_euler )*(k2 + kx2)
+             + 1/(8*np.pi*k2)*(kz2 - ky2) - 1/6*np.pi/(k2*b ** 2) )
+        gb_xy = kx/k * sum2
+        gb_yz = (kx/k * sum1)
+        gb_zx = -sum2
     
     gb_1d = np.array([[gb_xx, gb_xy, 0,0,0,-gb_zx],[gb_xy, gb_yy, 0, 0,0,gb_yz], [0,0,gb_zz, gb_zx,-gb_yz,0], [0,0,gb_zx,gb_xx,gb_xy,0] , [0,0,-gb_yz,gb_xy,gb_yy,0], [-gb_zx,gb_yz,0,0,0,gb_zz]]) 
     
     return gb_1d
 
+def k0_assy(val):
+    """
+    Evaluation for the approximation of the Modified Bessel Function of Second Kind of order 0 at real big argument.
+    
+    :param val: Argument.
+    :type val: float
 
-# "Gb_Ch" calculates the depolarization Green function of a chain of particles align along the "x" axis
-# oriented for the calculation of "Gb" of an two dimensional array.
-#
-# Inputs:
-#
-# "d" is the distance between particles.
-# "k" is the wavevector in the medium (It can be complex).
-# "kp" is the projection of the wavevector over the axis of the chain (the "x" axis) (It is real).
-#
-# Outputs:
-#
-# GbCh is the contribution of the chain to the depolarization Green function of the two dimensional array.
+    :return: Asymptotic aproximation of the Modified Bessel Function of Second Kind of order 0. 
+    """
+    return np.sqrt(np.pi/(2*val))*np.exp(-val)*(1 - 1/(8*val) + 9/(2*(8*val)**2) - 9*25/(6*(8*val)**3))
+
+
+def k1_assy(val):
+    """
+    Evaluation for the approximation of the Modified Bessel Function of Second Kind of order 1 at real big argument.
+    
+    :param val: Argument.
+    :type val: float
+
+    :return: Asymptotic aproximation of the Modified Bessel Function of Second Kind of order 1. 
+    """
+    val8 = 8*val
+    mu = 4
+    return np.sqrt(np.pi/(2*val))*np.exp(-val)*(1 + (mu-1)/(val8) + (mu-1)*(mu-9)/(2*(val8)**2) + (mu-1)*(mu-9)*(mu-25)/(6*(val8)**3))
+
 
 def calc_gb_ch(d,k,kp):
     """
