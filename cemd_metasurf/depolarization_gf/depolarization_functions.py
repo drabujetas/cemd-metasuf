@@ -38,7 +38,7 @@ def calc_gb_1puc(my_metasurface, n_sum = 4):
     #kx = kx - np.floor( (kx + np.pi/a)/(2*np.pi/a))*(2*np.pi/a)   # bring "kx" to the first Brilluoin zone for square arrays
     #ky = ky - np.floor( (ky + np.pi/b)/(2*np.pi/b))*(2*np.pi/b)   # bring "ky" to the first Brilluoin zone for square arrays
 
-    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 1) # convergence parameter
+    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 2) # convergence parameter
     if n_l > 7:
         n_l = 7
         raise ValueError("a/lambda >> 1")
