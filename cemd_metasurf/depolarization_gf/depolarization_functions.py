@@ -89,8 +89,8 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
     if np.abs(kx) > k and np.abs(kp)*b > 2:
         kp = np.imag(kp)
         kpma = kp*m*b
-        sum1 = np.sum(k0_assy(kpma))/np.pi
-        sum2 = np.sum(k1_assy(kpma)/(kpma))/np.pi
+        sum1 = 2*np.sum(k0_assy(kpma) * np.cos(ky*m*b))/np.pi
+        sum2 = 2*np.sum(k1_assy(kpma)/(kpma) * np.cos(ky*m*b) )/np.pi
         gb_xx = -(kp**2/k**2)*sum1
         gb_yy = sum1*(1 + kp**2/k**2) + sum2*kp**2/k**2
         gb_zz = sum1 - sum2*kp**2/k**2 
