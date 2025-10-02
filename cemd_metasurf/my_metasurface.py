@@ -33,20 +33,15 @@ class Metasurface(DGreenFunction, ReTr):
 	:type d_later: float (and numpy.ndarray in the future)
 	"""
 	def __init__(self,a=400,b=400,x=0,y=0,z=0,th=np.pi/2,eps_b = 1, d_layer = 0):
-		if isinstance(x,int) or isinstance(x,float):
-			x = np.float64(x)
-			y = np.float64(y)
-			z = np.float64(z)
-			self.__num_part = 1
-		elif len(x) == 1:
-			x = np.float64(x[0])
-			y = np.float64(y[0])
-			z = np.float64(z[0])
-			self.__num_part = 1
-		else:
-			self.__num_part = np.max(x.shape)
-			if y.shape != x.shape or y.shape != z.shape or z.shape != y.shape:
-				raise ValueError("Size mismatch between x, y and z")
+		x = np.atleast_1d(x)
+		y = np.atleast_1d(y)
+		z = np.atleast_1d(z)
+
+		if not (x.shape == y.shape == z.shape):
+			raise ValueError("Size mismatch between x, y and z")
+		
+		self.__num_part = x.shape[0]
+
 		self.__a = a
 		self.__b = b
 		self.__x = x
@@ -99,20 +94,14 @@ class Metasurface(DGreenFunction, ReTr):
 		:param z: Position in the z-axis of the particles that composed the unit cell.
 		:type z: float or numpy.ndarray
 		"""
-		if isinstance(x,int) or isinstance(x,float):
-			x = np.float64(x)
-			y = np.float64(y)
-			z = np.float64(z)
-			self.__num_part = 1
-		elif len(x) == 1:
-			x = np.float64(x[0])
-			y = np.float64(y[0])
-			z = np.float64(z[0])
-			self.__num_part = 1
-		else:
-			self.__num_part = np.max(x.shape)
-			if y.shape != x.shape or y.shape != z.shape or z.shape != y.shape:
-				raise ValueError("Size mismatch between x, y and z")
+		x = np.atleast_1d(x)
+		y = np.atleast_1d(y)
+		z = np.atleast_1d(z)
+
+		if not (x.shape == y.shape == z.shape):
+			raise ValueError("Size mismatch between x, y and z")
+		
+		self.__num_part = x.shape[0]
 
 		self.__x = x
 		self.__y = y

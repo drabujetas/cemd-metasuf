@@ -21,7 +21,7 @@ class DGreenFunction(object):
 			kb, kxb, kyb = my_bloch.get_bloch()
 			for i in range(kb.shape[0]):
 				self.k, self.kx, self.ky = kb[i], kxb[i], kyb[i]
-				if type(x) == np.float64:
+				if np.size(x) == 1:
 					self.gb_kxky = dgf.calc_gb_1puc(self)
 				else:
 					self.gb_kxky = dgf.calc_gb_npuc(self)
@@ -32,7 +32,7 @@ class DGreenFunction(object):
 					else:
 						self.array_k_gb = np.append(self.array_k_gb,k_gb, axis=0)
 		else:
-			if type(x) == np.float64:
+			if np.size(x) == 1:
 				self.gb_kxky = dgf.calc_gb_1puc(self)
 			else:
 				self.gb_kxky = dgf.calc_gb_npuc(self)	

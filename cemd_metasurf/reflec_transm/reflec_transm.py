@@ -46,7 +46,7 @@ class ReTr(object):
         for i in range(ind_ini,self.array_k_gb.shape[0]):
             self.k, self.kx, self.ky = self.array_k_gb[i,0:3].real
             self.set_alpha()
-            if type(x) == np.float64:
+            if np.size(x) == 1:
                 self.gb_kxky = self.array_k_gb[i,3:].reshape(6,6)
                 self.rt_kxky_nm = rtf.calc_rt(self,n,m)
             else:
@@ -211,7 +211,7 @@ class ReTr(object):
         for i in range(ind_ini,self.array_k_gb.shape[0]):
             self.k, self.kx, self.ky = self.array_k_gb[i,0:3].real
             self.set_alpha()
-            if type(x) == np.float64:
+            if np.size(x) == 1:
                 self.gb_kxky = self.array_k_gb[i,3:].reshape(6,6)
                 self.rt_kxky_nm = rtf.calc_rt_pol(self,pol_tm,pol_te,n,m)
             else:
