@@ -2,8 +2,9 @@ import numpy as np
 from .polarizability import mie_functions
 from .depolarization_gf.depolarization_gf import DGreenFunction
 from .reflec_transm.reflec_transm import ReTr
+from .near_field.near_field import NearF
 
-class Metasurface(DGreenFunction, ReTr):
+class Metasurface(DGreenFunction, ReTr, NearF):
 	"""
 	Class for defining the metasurface
 	"a" and "b" are the lengths of the lattice vectors ("a" along the x-axis) and "th" is the angle between the lattice vectors.
