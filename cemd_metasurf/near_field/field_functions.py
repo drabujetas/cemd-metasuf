@@ -250,9 +250,9 @@ def calc_gf_1puc(a,b,th,k,kx,ky,x,y,z,x_uc,y_uc,z_uc,n_sum,rec=True):
     :return: numpy.ndarray with the lattce Green function at the given position
     """
 
-    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 5) # convergence parameter
-    if n_l > 10:
-        n_l = 10
+    n_l = int(np.floor( np.real(k + np.abs(kx))/(2*np.pi/a) ) + 8) # convergence parameter
+    if n_l > 12:
+        n_l = 12
         raise ValueError("a/lambda >> 1")
     
     if np.sqrt( (x - x_uc)**2 + (y - y_uc)**2 + (z - z_uc)**2 ) < 0.05*a and rec == True:
@@ -260,9 +260,7 @@ def calc_gf_1puc(a,b,th,k,kx,ky,x,y,z,x_uc,y_uc,z_uc,n_sum,rec=True):
         re_p = G_em_renorm(k,x,y,z,x_uc,y_uc,z_uc)/(4*np.pi)*k
         return np.real(re_p) + 1j*im_p
     
-    gf = np.zeros((6, 6) , dtype = 'complex_')
-
-    if (y - y_uc) == 0 and (z - z_uc) == 0: #  Managing the case along the x-axis 
+    if np.abs(y - y_uc) < 0.1*b and (z - z_uc) == 0: #  Managing the case along the x-axis 
     # It looks like it is working for any "th"
     # A rotate the MTs an angle "th", then I have a latice with "a <-> b" and "th' = pi - th",
     # and finally I rotate back an angle "-th" the Green function.
@@ -284,10 +282,12 @@ def calc_gf_1puc(a,b,th,k,kx,ky,x,y,z,x_uc,y_uc,z_uc,n_sum,rec=True):
         x_uc_r = x_uc*cth + y_uc*sth
         y_uc_r = -x_uc*sth + y_uc*cth
         
-        gf = np.zeros((6, 6) , dtype = 'complex_')
+        gf = G1D_kx(n_sum,a*sthp,k,kpcy,kcy,xr,yr,z,x_uc_r,y_uc_r,z_uc)
 
-        for i in range(n_l*2 + 1):
-            kcyl = kcy - 2*np.pi/b*(i - n_l)
+        for i in range(n_l - 1):
+            kcyl = kcy - 2*np.pi/b*(i + 1)
+            gf += G1D_kx(n_sum,a*sthp,k,kpcy - (kcyl-kcy)*(cthp)/sthp,kcyl,xr,yr,z,x_uc_r,y_uc_r,z_uc)
+            kcyl = kcy + 2*np.pi/b*(i + 1)
             gf += G1D_kx(n_sum,a*sthp,k,kpcy - (kcyl-kcy)*(cthp)/sthp,kcyl,xr,yr,z,x_uc_r,y_uc_r,z_uc)
             
         rm_rot = np.array([
@@ -304,9 +304,13 @@ def calc_gf_1puc(a,b,th,k,kx,ky,x,y,z,x_uc,y_uc,z_uc,n_sum,rec=True):
         
     else:                                 # valid for any "th"
         
-        for i in range(n_l*2 + 1):
-            kxl = kx - 2*np.pi/a*(i - n_l)
-            gf += G1D_kx(n_sum,b*np.sin(th),k,ky - ((kxl-kx)*np.cos(th)/np.sin(th)),kxl,x,y,z,x_uc,y_uc,z_uc)
+        gf = G1D_kx(n_sum,b*np.sin(th),k,ky,kx,x,y,z,x_uc,y_uc,z_uc)
+
+        for i in range(n_l - 1):
+            kxl = kx - 2*np.pi/a*(i + 1)
+            gf += G1D_kx(n_sum,b*np.sin(th),k,ky - (kxl-kx)*np.cos(th)/np.sin(th),kxl,x,y,z,x_uc,y_uc,z_uc)
+            kxl = kx + 2*np.pi/a*(i + 1)
+            gf += G1D_kx(n_sum,b*np.sin(th),k,ky - (kxl-kx)*np.cos(th)/np.sin(th),kxl,x,y,z,x_uc,y_uc,z_uc)
 
         gf = gf/a
 
@@ -402,10 +406,10 @@ def G1D_kx(n_sum,a,k,ky,kx,x0,y0,z0,x,y,z):
             k0_kp = k0_mine(kpma)
             k1_kp = k1_mine(kpma)
             txx = np.exp(1j*kx*X)*np.sum(k0_kp*np.exp(1j*ky*m*a)) /(2*np.pi)
-            txy = kp/k*np.exp(1j*kx*X)*np.sum(k0_kp*(Y-m*a)/rho*np.exp(1j*ky*m*a)) /(2*np.pi)
+            txy = kp/k*np.exp(1j*kx*X)*np.sum(k1_kp*(Y-m*a)/rho*np.exp(1j*ky*m*a)) /(2*np.pi)
 
             Gxxs = -(kp**2/k**2)*txx
-            Gyys = np.exp(1j*kx*X)*np.sum( (k0_kp*(1 + kp**2/k**2*Y**2/rho**2) + k1_kp*kp**2/k**2/kpma*(2*Y**2/rho**2 -1 ))*np.exp(1j*ky*m*a) ) /(2*np.pi)
+            Gyys = np.exp(1j*kx*X)*np.sum( np.exp(1j*ky*m*a)*(k0_kp*(1 + kp**2/k**2*(Y - m*a)**2/rho**2) + k1_kp*kp**2/k**2/kpma*(2*(Y - m*a)**2/rho**2 -1 )) ) /(2*np.pi)
             Gzzs = np.exp(1j*kx*X)*np.sum( np.exp(1j*ky*m*a)*(k0_kp*(1 + kp**2/k**2*Z**2/rho**2) + k1_kp*kp**2/k**2/kpma*(2*Z**2/rho**2 -1 )) ) /(2*np.pi)
             Gxys = -1j*kx/k*txy
             GzxEMs = -1j*txy

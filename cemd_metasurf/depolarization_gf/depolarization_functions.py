@@ -89,14 +89,15 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
     if np.abs(kx) > k and np.abs(kp)*b > 2:
         kp = np.imag(kp)
         kpma = kp*m*b
-        sum1 = 2*np.sum(k0_assy(kpma) * np.cos(ky*m*b))/np.pi
-        sum2 = 2*np.sum(k1_assy(kpma)/(kpma) * np.cos(ky*m*b) )/np.pi
+        sum1 = np.sum(k0_assy(kpma) * np.cos(ky*m*b))/np.pi
+        sum2 = np.sum(k1_assy(kpma)/(kpma) * np.cos(ky*m*b) )/np.pi
+        sum3 = kp/k*np.sum(k1_assy(kpma) * np.sin(ky*m*b) )/np.pi
         gb_xx = -(kp**2/k**2)*sum1
         gb_yy = sum1*(1 + kp**2/k**2) + sum2*kp**2/k**2
         gb_zz = sum1 - sum2*kp**2/k**2 
-        gb_xy = -kx*kp/k**2*sum2
+        gb_xy = -kx/k*sum3
         gb_yz = kx/k*sum1
-        gb_zx = kp/k*sum2
+        gb_zx = sum3
     
     else:         
         k2 = k ** 2
@@ -139,7 +140,6 @@ def calc_gb_1d_kx(n_sum,b,k,ky,kx):
     gb_1d[2, 2] = gb_1d[5, 5] = gb_zz
     
     gb_1d[0, 1] = gb_1d[1, 0] = gb_1d[3, 4] = gb_1d[4, 3] = gb_xy
-    gb_1d[1, 5] = gb_1d[5, 1] = gb_1d[3, 2] = gb_1d[2, 3] = gb_yz
     gb_1d[0, 5] = gb_1d[5, 0] = -gb_zx
     gb_1d[2, 3] = gb_1d[3, 2] = gb_zx
     gb_1d[2, 4] = gb_1d[4, 2] = -gb_yz
